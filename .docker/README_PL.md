@@ -1,4 +1,4 @@
-## Wihajster — środowisko oparte na Dockerze
+/## Wihajster — środowisko oparte na Dockerze
 
 #### Przed pierwszym uruchomieniem
 
