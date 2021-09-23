@@ -5,6 +5,7 @@
         <sms_subscription>
             <general>
                 <enable>0</enable>
+                <show_in_sidebar>1</show_in_sidebar>
             </general>
         </sms_subscription>
     </default>

@@ -1,1 +1,48 @@
-<p> TODO </p>
+
+<?php $smsSubscriptionCollection= $this->getSmsSubscriptionCollection(); ?>
+
+<?php if ($smsSubscriptionCollection && sizeof($smsSubscriptionCollection)): ?>
+
+    <?php if ($this->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom">
+            <?php echo $this->getPagerHtml(); ?>
+
+        </div>
+    <?php endif ?>
+
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption">
+                <?php echo __('Grid Record') ?>
+            </caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?php echo __('Subscription ID') ?></th>
+                <th scope="col" class="col title"><?php echo __('Status') ?>
+                <th scope="col" class="col title"><?php echo __('Post date') ?>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($smsSubscriptionCollection as $smsSubscription): ?>
+                <tr>
+                    <td data-th="<?= $this->escapeHtml(__('Subscription ID')) ?>" class="col id">
+                        <?php echo $smsSubscription->getSubscriptionId() ?>
+                    </td>
+                    <td data-th="<?= $this->escapeHtml(__('Subscription Status')) ?>" class="col product">
+                        <?php echo $smsSubscription->getSubscriptionStatus() ?>
+                    </td>
+                    <td data-th="<?= $this->escapeHtml(__('Post date')) ?>" class="col product">
+                        <?php echo $smsSubscription->getSubscriptionStart() ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else: ?>
+    <div class="message info empty"><span>
+                <?php echo __('No any record.'); ?></span></div>
+
+
+<?php endif ?>
