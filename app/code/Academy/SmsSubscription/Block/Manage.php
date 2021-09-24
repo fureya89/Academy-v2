@@ -19,7 +19,7 @@ class Manage extends Template
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
-
+        $this->pageConfig->getTitle()->set(__('My SMS Subscription'));
         if ($this->getSmsSubscriptionCollection()) {
             $pager = $this->getLayout()
                 ->createBlock('Magento\Theme\Block\Html\Pager','subscription.pager')
