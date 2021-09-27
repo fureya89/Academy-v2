@@ -4,8 +4,7 @@
     <default>
         <sms_subscription>
             <general>
-                <enable>0</enable>
-                <show_in_sidebar>1</show_in_sidebar>
+                <enable>true</enable>
             </general>
         </sms_subscription>
     </default>

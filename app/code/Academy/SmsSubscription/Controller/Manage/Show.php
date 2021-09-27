@@ -25,8 +25,6 @@ class Show extends \Magento\Framework\App\Action\Action implements ActionInterfa
 
     public function execute()//: \Magento\Framework\Controller\ResultInterface
     {
-        //$smsSubscriptionCollection = $this->_collection->create();
-
         return $this->_pageFactory->create();
     }
 }
