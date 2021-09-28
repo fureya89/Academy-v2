@@ -17,23 +17,27 @@
             </caption>
             <thead>
             <tr>
-                <th scope="col" class="col id"><?php echo __('Subscription ID') ?></th>
-                <th scope="col" class="col title"><?php echo __('Status') ?>
+                <th scope="col" class="col id"><?php echo __('Phone number') ?></th>
+                <th scope="col" class="col title"><?php echo __('Subscription Status') ?>
                 <th scope="col" class="col title"><?php echo __('Post date') ?>
+                <th scope="col" class="col title"><?php echo __('Update date') ?>
                 </th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($smsSubscriptionCollection as $smsSubscription): ?>
                 <tr>
-                    <td data-th="<?= $this->escapeHtml(__('Subscription ID')) ?>" class="col id">
-                        <?php echo $smsSubscription->getSubscriptionId() ?>
+                    <td data-th="<?= $this->escapeHtml(__('Phone number')) ?>" class="col id">
+                        <?php echo $smsSubscription->getPhone() ?>
                     </td>
                     <td data-th="<?= $this->escapeHtml(__('Subscription Status')) ?>" class="col product">
                         <?php echo $smsSubscription->getSubscriptionStatus() ?>
                     </td>
                     <td data-th="<?= $this->escapeHtml(__('Post date')) ?>" class="col product">
-                        <?php echo $smsSubscription->getSubscriptionStart() ?>
+                        <?php echo $smsSubscription->getCreatedAt() ?>
+                    </td>
+                    <td data-th="<?= $this->escapeHtml(__('Update date')) ?>" class="col product">
+                        <?php echo $smsSubscription->getUpdatedAt() ?>
                     </td>
                 </tr>
             <?php endforeach; ?>
