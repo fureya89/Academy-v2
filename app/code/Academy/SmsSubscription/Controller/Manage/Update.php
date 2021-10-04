@@ -2,15 +2,13 @@
 
 namespace Academy\SmsSubscription\Controller\Manage;
 
-use Magento\Customer\Api\CustomerRepositoryInterface as CustomerRepository;
-use Magento\Customer\Api\Data\CustomerInterface;
+
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\Controller\Result\RedirectFactory;
-use Magento\Newsletter\Model\Subscriber;
-use Magento\Newsletter\Model\SubscriptionManagerInterface;
+
 
 class Update extends \Magento\Framework\App\Action\Action implements ActionInterface
 {
@@ -19,7 +17,7 @@ class Update extends \Magento\Framework\App\Action\Action implements ActionInter
     protected $_collection;
     protected $_smsSubscriptionFactory;
     protected $_smsSubscriptionResource;
-    protected $_redirectFactory;
+    private $_redirectFactory;
 
 
     public function __construct(
@@ -42,50 +40,37 @@ class Update extends \Magento\Framework\App\Action\Action implements ActionInter
 
     public function execute()
     {
-
-        $customerId = 1; //(int)$this->_request->getParam('customer_id');  // TODO test dla pierwszego usera
+        $countError = 0;
         $allData = $this->_request->getParam('data');
-
 
         foreach ($allData as $data){
 
-            $phone = $data[0];
+            $subscriptionId = $data[2];
             $subscriptionStatus = ($data[1] == 'true') ? 1 : 0;
             $updatedAt = date("Y-m-d H:i:s");
-            $dataForChange = array('subscription_status'=>$subscriptionStatus, 'updated_at'=>$updatedAt);
 
-            $updateSmsSubscryption= $this->_smsSubscriptionCollectionFactory->create();
+            $updateSmsSubscryption= $this->_smsSubscriptionFactory->create();
+;
+            $this->_smsSubscriptionResource->load($updateSmsSubscryption, $subscriptionId);
 
-            $updateSmsSubscryption->addFieldToFilter('customer_id', array('eq' => $customerId))
-                ->addFieldToFilter('phone', array('eq' => $phone));
+            $updateSmsSubscryption->setSubscriptionStatus($subscriptionStatus);
+            $updateSmsSubscryption->setUpdatedAt($updatedAt);
 
-            //$this->_smsSubscriptionResource->load($updateSmsSubscryption, $phone, 'phone');
-
-            $editedSubscription = $updateSmsSubscryption->getFirstItem();
-
-            $editedSubscription -> setData($dataForChange);
-
-            $this->_smsSubscriptionResource->save($editedSubscription);
-
-
-/*  do poprawy
             try {
-                $this->_smsSubscriptionResource->save($editedSubscription);
-                $this->messageManager->addSuccessMessage("SMS Subscription updated successfully!");
+                $this->_smsSubscriptionResource->save($updateSmsSubscryption);
             } catch (\Exception $exception) {
-                $this->messageManager->addErrorMessage(__("Error updating SMS Subscription"));
+                $countError += 1;
             }
-*/
-
 
         }
 
+        if ($countError > 0){
+            $this->messageManager->addErrorMessage(__('Something went wrong while updating your subscription.'));
+        }else{
+            $this->messageManager->addSuccessMessage("SMS Subscription updated successfully!");
+        }
 
-        $redirect = $this->_redirectFactory->create();
-       // $redirect->setPath('subscription/manage/show');
-        $redirect->setPath('customer/account');
-
-        return $redirect;
+        return $this->_redirectFactory('subscription/manage/show');
 
     }
 }

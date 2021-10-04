@@ -63,7 +63,7 @@ $smsSubscriptionCollection= $this->getSmsSubscriptionCollection();
                 <th scope="col" class="col title"><?php echo __('Post date') ?>
                 <th scope="col" class="col title"><?php echo __('Update date') ?>
                 <th scope="col" class="col title"><?php echo __('Change status') ?>
-                </th>
+                <th style="display:none;" scope="col" class="col title">
             </tr>
             </thead>
             <tbody>
@@ -81,6 +81,7 @@ $smsSubscriptionCollection= $this->getSmsSubscriptionCollection();
                     <td data-th="<?= $this->escapeHtml(__('Subscription Status')) ?>" class="col_status">
                         <input type="checkbox" name="is_subscribed" id="subscription" value="1" <?php if ($smsSubscription->getSubscriptionStatus()) : ?> checked="checked"<?php endif; ?> class="checkbox">
                     </td>
+                    <td style="display:none;" data-th="<?= $this->escapeHtml(__('test')) ?>" class="col_status"><?php echo $smsSubscription->getSubscriptionId() ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -113,11 +114,11 @@ $smsSubscriptionCollection= $this->getSmsSubscriptionCollection();
 
                        data.push([
                            cells[0].innerHTML,
-                           cells[3].children[0].checked
+                           cells[3].children[0].checked,
+                           cells[4].innerHTML,
                        ]);
                    }
 
-                   console.log('data  '+data);
                    var url = "<?php echo $block->getBaseUrl().'subscription/manage/update/' ?>";
                    console.log('url  '+ url);
                    jQuery.ajax({

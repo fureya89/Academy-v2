@@ -10,6 +10,8 @@ use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactor
 class Manage extends Template
 
 {
+    const PAGE = 1;
+    const PAGE_SIZE = 10;
     protected Session $customerSession;
     private CollectionFactory $_smsSubscriptionCollectionFactory;
 
@@ -53,8 +55,8 @@ class Manage extends Template
     {
         $customerId = $this->getCurrentCustomerId();
 
-        $page = $this->getRequest()->getParam('p') ?: 1;
-        $pageSize = $this->getRequest()->getParam('limit') ?: 5;
+        $page = $this->getRequest()->getParam('p') ?: self::PAGE;
+        $pageSize = $this->getRequest()->getParam('limit') ?: self::PAGE_SIZE;
         $collection = $this->_smsSubscriptionCollectionFactory->create();
         $collection->addFieldToFilter('customer_id', array('eq' => $customerId));
         $collection->setPageSize($pageSize);
