@@ -5,6 +5,8 @@ namespace Academy\SmsSubscription\Model\ResourceModel\SmsSubscription;
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
 
+
+
     protected function _construct()
     {
         $this->_init(
@@ -12,4 +14,5 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
             'Academy\SmsSubscription\Model\ResourceModel\SmsSubscription'
         );
     }
+
 }

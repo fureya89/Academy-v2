@@ -23,7 +23,7 @@ class Show extends \Magento\Framework\App\Action\Action implements ActionInterfa
         parent::__construct($context);
     }
 
-    public function execute()//: \Magento\Framework\Controller\ResultInterface
+    public function execute()
     {
         return $this->_pageFactory->create();
     }

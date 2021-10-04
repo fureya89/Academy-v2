@@ -3,7 +3,7 @@
     <update handle="customer_account"/>
     <body>
         <referenceContainer name="content">
-            <block class="Academy\SmsSubscription\Block\Manage" name="academy_smssubscription_manage" template="Academy_SmsSubscription::manage.phtml" />
+            <block class="Academy\SmsSubscription\Block\Manage" name="academy_smssubscription_manage" template="Academy_SmsSubscription::manage.phtml" cacheable="false" />
         </referenceContainer>
     </body>
 </page>
