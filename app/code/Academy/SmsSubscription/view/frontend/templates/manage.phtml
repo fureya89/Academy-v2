@@ -96,9 +96,6 @@ $smsSubscriptionCollection= $this->getSmsSubscriptionCollection();
 
 
 <script>
-
-        console.log('ready');
-
         document.getElementById ("save").addEventListener ("click", changesSubscription);
 
               function changesSubscription()
@@ -120,14 +117,10 @@ $smsSubscriptionCollection= $this->getSmsSubscriptionCollection();
                    }
 
                    var url = "<?php echo $block->getBaseUrl().'subscription/manage/update/' ?>";
-                   console.log('url  '+ url);
                    jQuery.ajax({
                        url: url,
                        method:"POST",
                        data:{data:data},
-                       success: function(response){
-                           console.log(response);
-                       }
                    });
                 }
 </script>

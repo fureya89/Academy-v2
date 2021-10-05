@@ -8,9 +8,14 @@ use Magento\Framework\App\ActionInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\State\UserLockedException;
 use Magento\Framework\Validator\Exception as ValidatorException;
+use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory;
+use Academy\SmsSubscription\Model\SmsSubscriptionFactory;
+use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription;
+use Exception;
 
 
 class Add extends \Magento\Framework\App\Action\Action implements ActionInterface
@@ -27,11 +32,11 @@ class Add extends \Magento\Framework\App\Action\Action implements ActionInterfac
     public function __construct(
         Session $customerSession,
         Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
+        PageFactory $pageFactory,
         RedirectFactory $redirectFactory,
-        \Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory $collectionFactory,
-        \Academy\SmsSubscription\Model\SmsSubscriptionFactory $smsSubscriptionFactory,
-        \Academy\SmsSubscription\Model\ResourceModel\SmsSubscription $smsSubscriptionResource
+        CollectionFactory $collectionFactory,
+        SmsSubscriptionFactory $smsSubscriptionFactory,
+        SmsSubscription $smsSubscriptionResource
         )
     {
         $this->_customerSession = $customerSession;
@@ -47,19 +52,20 @@ class Add extends \Magento\Framework\App\Action\Action implements ActionInterfac
     {
         $customerId = (int)$this->_customerSession->getCustomer()->getId();
 
-        if ($customerId === null) {
-            $this->messageManager->addErrorMessage(__('Something went wrong while saving your subscription.'));
-        } else {
-            try {
 
+            try {
+                if (!$customerId) {
+                    throw new Exception('Invalid customer ID');
+                }
 
                 $phone = (string)$this->_request->getParam('phone');
 
                 $collection = $this->_collection->create()->addFieldToFilter('phone', array('eq' => $phone))->getFirstItem();
-                /////
+
                 if($collection->getSubscriptionId()){
-                    $this->messageManager->addErrorMessage(__('The phone number exists in the database!'));
-                }else{
+                    throw new Exception('The phone number exists in the database!');
+                }
+
                     $subscriptionStatus = (int)1;
                     $createdAt = date("Y-m-d H:i:s");
                     $updatedAt = date("Y-m-d H:i:s");
@@ -74,12 +80,12 @@ class Add extends \Magento\Framework\App\Action\Action implements ActionInterfac
                     $this->_smsSubscriptionResource->save($newSmsSubscryption);
 
                     $this->messageManager->addSuccess(__('We have saved your subscription.'));
-                }
+
 
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage(__('Something went wrong while saving your subscription.'));
+                $this->messageManager->addErrorMessage($e->getMessage());
             }
-        }
+
         $redirect = $this->_redirectFactory->create();
         $redirect->setPath('subscription/manage/show');
         return $redirect;

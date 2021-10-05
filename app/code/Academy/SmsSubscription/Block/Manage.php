@@ -11,7 +11,7 @@ class Manage extends Template
 
 {
     const PAGE = 1;
-    const PAGE_SIZE = 10;
+    const PAGE_SIZE = 5;
     protected Session $customerSession;
     private CollectionFactory $_smsSubscriptionCollectionFactory;
 

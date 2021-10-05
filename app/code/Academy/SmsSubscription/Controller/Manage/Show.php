@@ -6,7 +6,8 @@ namespace Academy\SmsSubscription\Controller\Manage;
 
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ActionInterface;
-
+use Magento\Framework\View\Result\PageFactory;
+use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory;
 
 class Show extends \Magento\Framework\App\Action\Action implements ActionInterface
 {
@@ -15,8 +16,8 @@ class Show extends \Magento\Framework\App\Action\Action implements ActionInterfa
 
     public function __construct(
         Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory $collectionFactory)
+        PageFactory $pageFactory,
+        CollectionFactory $collectionFactory)
     {
         $this->_pageFactory = $pageFactory;
         $this->_collection= $collectionFactory;

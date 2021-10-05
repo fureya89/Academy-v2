@@ -2,12 +2,16 @@
 
 namespace Academy\SmsSubscription\Controller\Manage;
 
-
+use Magento\Backend\Model\Auth\Session;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\App\ActionInterface;
 use Magento\Framework\Controller\Result\RedirectFactory;
+use Magento\Framework\View\Result\PageFactory;
+use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory;
+use Academy\SmsSubscription\Model\SmsSubscriptionFactory;
+use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription;
 
 
 class Update extends \Magento\Framework\App\Action\Action implements ActionInterface
@@ -22,12 +26,12 @@ class Update extends \Magento\Framework\App\Action\Action implements ActionInter
 
     public function __construct(
         Context $context,
-        \Magento\Backend\Model\Auth\Session $auth,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
+        Session $auth,
+        PageFactory $pageFactory,
         RedirectFactory $redirectFactory,
-        \Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory $collectionFactory,
-        \Academy\SmsSubscription\Model\SmsSubscriptionFactory $smsSubscriptionFactory,
-        \Academy\SmsSubscription\Model\ResourceModel\SmsSubscription $smsSubscriptionResource)
+        CollectionFactory $collectionFactory,
+        SmsSubscriptionFactory $smsSubscriptionFactory,
+        SmsSubscription $smsSubscriptionResource)
     {
         parent::__construct($context);
         $this->_auth = $auth;
