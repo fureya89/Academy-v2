@@ -1,5 +1,44 @@
 
-<?php $smsSubscriptionCollection= $this->getSmsSubscriptionCollection(); ?>
+
+<?php
+$smsSubscriptionCollection= $this->getSmsSubscriptionCollection();
+/** @var \Academy\SmsSubscription\Block\Manage $block */
+?>
+
+
+
+
+<form class="form subscribe"
+      novalidate
+      action="<?= $block->getSaveUrl() ?>"
+      method="post"
+      data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+      id="newsletter-validate-detail">
+    <div class="field newsletter">
+        <div class="control">
+            <input name="customer_id" type="hidden" id="customer_id" value="1"/>
+            <label for="newsletter">
+                        <span class="label">
+                            <?= $block->escapeHtml(__('Sign Up for Our SMS Newsletter:')) ?>
+                        </span>
+
+                <input name="phone" type="tel" id="phone"
+                       placeholder="<?= $block->escapeHtml(__('Enter your phone number')) ?>"
+                       required
+                />
+            </label>
+
+        </div>
+    </div>
+    <div class="actions">
+        <button class="action subscribe primary"
+                title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
+                type="submit"
+                aria-label="Subscribe">
+            <span><?= $block->escapeHtml(__('Subscribe')) ?></span>
+        </button>
+    </div>
+</form>
 
 <?php if ($smsSubscriptionCollection && sizeof($smsSubscriptionCollection)): ?>
 
@@ -10,31 +49,39 @@
         </div>
     <?php endif ?>
 
+
+
     <div class="table-wrapper orders-history">
-        <table class="data table table-order-items history" id="my-orders-table">
+        <button type="button" name="save" id="save" class="btn btn-info">Save changes</button>
+        <table class="data table table-order-items history" id="my-subscription-table">
             <caption class="table-caption">
                 <?php echo __('Grid Record') ?>
             </caption>
             <thead>
             <tr>
-                <th scope="col" class="col id"><?php echo __('Subscription ID') ?></th>
-                <th scope="col" class="col title"><?php echo __('Status') ?>
+                <th scope="col" class="col id"><?php echo __('Phone number') ?></th>
                 <th scope="col" class="col title"><?php echo __('Post date') ?>
-                </th>
+                <th scope="col" class="col title"><?php echo __('Update date') ?>
+                <th scope="col" class="col title"><?php echo __('Change status') ?>
+                <th style="display:none;" scope="col" class="col title">
             </tr>
             </thead>
             <tbody>
             <?php foreach ($smsSubscriptionCollection as $smsSubscription): ?>
                 <tr>
-                    <td data-th="<?= $this->escapeHtml(__('Subscription ID')) ?>" class="col id">
-                        <?php echo $smsSubscription->getSubscriptionId() ?>
+                    <td data-th="<?= $this->escapeHtml(__('Phone number')) ?>" class="col_phone">
+                        <?php echo $smsSubscription->getPhone() ?>
                     </td>
-                    <td data-th="<?= $this->escapeHtml(__('Subscription Status')) ?>" class="col product">
-                        <?php echo $smsSubscription->getSubscriptionStatus() ?>
+                    <td data-th="<?= $this->escapeHtml(__('Post date')) ?>" class="col_created">
+                        <?php echo $smsSubscription->getCreatedAt() ?>
                     </td>
-                    <td data-th="<?= $this->escapeHtml(__('Post date')) ?>" class="col product">
-                        <?php echo $smsSubscription->getSubscriptionStart() ?>
+                    <td data-th="<?= $this->escapeHtml(__('Update date')) ?>" class="col_updated">
+                        <?php echo $smsSubscription->getUpdatedAt() ?>
                     </td>
+                    <td data-th="<?= $this->escapeHtml(__('Subscription Status')) ?>" class="col_status">
+                        <input type="checkbox" name="is_subscribed" id="subscription" value="1" <?php if ($smsSubscription->getSubscriptionStatus()) : ?> checked="checked"<?php endif; ?> class="checkbox">
+                    </td>
+                    <td style="display:none;" data-th="<?= $this->escapeHtml(__('test')) ?>" class="col_status"><?php echo $smsSubscription->getSubscriptionId() ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
@@ -46,3 +93,36 @@
 
 
 <?php endif ?>
+
+
+<script>
+        document.getElementById ("save").addEventListener ("click", changesSubscription);
+
+              function changesSubscription()
+               {
+                   var table = document.getElementById("my-subscription-table");
+                   var rows = table.rows,
+                       len = rows.length,
+                       data = [],
+                       cells;
+
+                   for (var n= 1; n < len; n++){
+                       cells = rows[n].cells;
+
+                       data.push([
+                           cells[0].innerHTML,
+                           cells[3].children[0].checked,
+                           cells[4].innerHTML,
+                       ]);
+                   }
+
+                   var url = "<?php echo $block->getBaseUrl().'subscription/manage/update/' ?>";
+                   jQuery.ajax({
+                       url: url,
+                       method:"POST",
+                       data:{data:data},
+                   });
+                }
+</script>
+
+

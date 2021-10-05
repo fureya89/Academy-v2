@@ -4,9 +4,9 @@
         <column xsi:type="int" name="subscription_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Subscription ID"/>
         <column xsi:type="int" name="customer_id" padding="10" unsigned="true" nullable="false" identity="false" comment="User ID"/>
         <column xsi:type="varchar" name="phone" nullable="false" length="50" comment="Phone number"/>
-        <column xsi:type="varchar" name="subscription_status" nullable="false" length="255" comment="Subscription status"/>
-        <column xsi:type="datetime" name="subscription_start" nullable="true" comment="Date and hour when subscription was send"/>
-        <column xsi:type="datetime" name="subscription_end" nullable="true" comment="Date and hour when subscription was updated"/>
+        <column xsi:type="boolean" name="subscription_status" nullable="false" comment="Subscription status"/>
+        <column xsi:type="datetime" name="created_at" nullable="false" comment="Date and hour when subscription was send"/>
+        <column xsi:type="datetime" name="updated_at" nullable="false" comment="Date and hour when subscription was updated"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="subscription_id" />
         </constraint>

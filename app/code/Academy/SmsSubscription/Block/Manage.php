@@ -2,6 +2,7 @@
 
 namespace Academy\SmsSubscription\Block;
 
+use Magento\Customer\Model\Session;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactory;
@@ -9,11 +10,19 @@ use Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\CollectionFactor
 class Manage extends Template
 
 {
+    const PAGE = 1;
+    const PAGE_SIZE = 5;
+    protected Session $customerSession;
     private CollectionFactory $_smsSubscriptionCollectionFactory;
-    public function __construct(Context $context, CollectionFactory $smsSubscriptionCollectionFactory, array $data = [])
+
+    public function __construct(Context $context,
+                                CollectionFactory $smsSubscriptionCollectionFactory,
+                                Session $customerSession,
+                                array $data = [])
     {
         $this->_smsSubscriptionCollectionFactory = $smsSubscriptionCollectionFactory;
         parent::__construct($context, $data);
+        $this->customerSession = $customerSession;
     }
 
     protected function _prepareLayout()
@@ -37,13 +46,32 @@ class Manage extends Template
         return $this->getChildHtml('pager');
     }
 
-    public function getSmsSubscriptionCollection()
+    public function getCurrentCustomerId(): int
     {
-        $page = $this->getRequest()->getParam('p') ?: 1;
-        $pageSize = $this->getRequest()->getParam('limit') ?: 5;
+        return (int)$this->customerSession->getCustomerId();
+    }
+
+    public function getSmsSubscriptionCollection(): \Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\Collection
+    {
+        $customerId = $this->getCurrentCustomerId();
+
+        $page = $this->getRequest()->getParam('p') ?: self::PAGE;
+        $pageSize = $this->getRequest()->getParam('limit') ?: self::PAGE_SIZE;
         $collection = $this->_smsSubscriptionCollectionFactory->create();
+        $collection->addFieldToFilter('customer_id', array('eq' => $customerId));
         $collection->setPageSize($pageSize);
         $collection->setCurPage($page);
         return $collection;
     }
+
+    public function getAction()
+    {
+        return $this->getUrl('subscription/manage/update');
+    }
+
+    public function getSaveUrl()
+    {
+        return $this->getUrl('subscription/manage/add');
+    }
+
 }
