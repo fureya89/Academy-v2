@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Academy\SmsSubscription\Ui\DataProvider\Manage\ListingDataProvider">
+        <plugin name="academy_subscription_attributes" type="Academy\SmsSubscription\Plugin\AddAttributesToUiDataProvider"/>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="subscription_manage_listing_data_source" xsi:type="string">Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Academy\SmsSubscription\Model\ResourceModel\SmsSubscription\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">sms_subscription</argument>
+            <argument name="resourceModel" xsi:type="string">Academy\SmsSubscription\Model\ResourceModel\SmsSubscription</argument>
+        </arguments>
+    </virtualType>
+
+
+
+</config>
