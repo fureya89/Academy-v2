@@ -34,7 +34,6 @@ class AddAttributesToUiDataProvider
         $columnCustomer = 'entity_id';
 
         $result->getSelect()->joinLeft(
-           // ['devgridname' => $attribute->getBackendTable()],
             ['customer_entity'],
             'customer_entity.' . $columnCustomer . ' = main_table.' . $columnSubscription,
             ['lastname' => 'customer_entity.lastname','firstname' => 'customer_entity.firstname']

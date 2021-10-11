@@ -34,31 +34,3 @@ class Index extends Action implements HttpGetActionInterface
     }
 }
 
-
-
-/*
-use Magento\Framework\App\ActionInterface;
-use Magento\Framework\View\Result\Page;
-use Magento\Framework\View\Result\PageFactory;
-
-
-class Index implements ActionInterface
-{
-    const MENU_ID = 'Snowdog_Academy:greetings_manage';
-
-    protected PageFactory $resultPageFactory;
-
-    public function __construct(PageFactory $resultPageFactory) {
-        $this->resultPageFactory = $resultPageFactory;
-    }
-    public function execute(): Page
-    {
-        $resultPage = $this->resultPageFactory->create();
-
-        $resultPage->setActiveMenu(static::MENU_ID);
-        $resultPage->getConfig()->getTitle()->prepend(__('Hello World!'));
-
-        return $resultPage;
-    }
-}
-*/
