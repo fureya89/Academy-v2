@@ -5,7 +5,7 @@
     <menu>
         <add id="Academy_SmsSubscription::subscription_manage"
              title="SMS Subscription" module="Academy_SmsSubscription" sortOrder="999"
-             resource="Magento_Backend::content" />
+             resource="Academy_SmsSubscription::subscription" />
         <add id="Academy_SmsSubscription::subscription_manage_index"
              title="Grid" translate="title" module="Academy_SmsSubscription"
              parent="Academy_SmsSubscription::subscription_manage" sortOrder="10"
