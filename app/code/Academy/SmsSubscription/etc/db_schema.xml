@@ -12,6 +12,14 @@
         </constraint>
         <constraint xsi:type="foreign" referenceId="SMS_SUBSCRIPTION_CUSTOMER_ID_CUSTOMER_ENTT_ENTT_ID" table="sms_subscription" column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
     </table>
+    <table name="sms_subscription_message">
+        <column xsi:type="int" name="message_id" padding="11" unsigned="false" nullable="false" identity="true" comment="Message ID"/>
+        <column xsi:type="varchar" name="contents" nullable="false" length="500" comment="SMS subscription text"/>
+        <column xsi:type="datetime" name="created_at" nullable="false" comment="Date and hour when message was send"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="message_id" />
+        </constraint>
+    </table>
 </schema>
 
 

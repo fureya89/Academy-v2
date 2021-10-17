@@ -5,6 +5,7 @@
             <resource id="Magento_Backend::admin">
                 <resource id="Academy_SmsSubscription::subscription" title="SMS Subscription Grid" sortOrder="10" >
                     <resource id="Academy_SmsSubscription::index" title="Subscription Listing" sortOrder="10" />
+                    <resource id="Academy_SmsSubscription::message" title="Subscription Message" sortOrder="20" />
                 </resource>
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
