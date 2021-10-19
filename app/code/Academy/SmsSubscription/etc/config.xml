@@ -5,6 +5,9 @@
         <sms_subscription>
             <general>
                 <enable>0</enable>
+                <url>https://kbbswfakqv.cfolks.pl/api/sms/send</url>
+                <apikey>Tra1l3rParkB0y5</apikey>
+                <max_attemps>5</max_attemps>
             </general>
         </sms_subscription>
     </default>

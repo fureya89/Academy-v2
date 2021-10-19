@@ -13,7 +13,8 @@
     "require": {
         "community-engineering/language-pl_pl": "^0.0.19",
         "magento/product-community-edition": "2.4.2",
-        "mageplaza/module-google-recaptcha": "^4.0"
+        "mageplaza/module-google-recaptcha": "^4.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "~1.2.0",
