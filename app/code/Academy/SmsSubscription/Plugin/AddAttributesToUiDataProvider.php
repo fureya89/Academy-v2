@@ -3,7 +3,7 @@
 namespace Academy\SmsSubscription\Plugin;
 
 use Academy\SmsSubscription\Ui\DataProvider\Manage\ListingDataProvider as SubscriptionDataProvider;
-use Magento\Eav\Api\AttributeRepositoryInterface;
+//use Magento\Eav\Api\AttributeRepositoryInterface;
 use Magento\Framework\App\ProductMetadataInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
 
@@ -16,10 +16,10 @@ class AddAttributesToUiDataProvider
 
 
     public function __construct(
-        AttributeRepositoryInterface $attributeRepository,
+        //AttributeRepositoryInterface $attributeRepository,
         ProductMetadataInterface $productMetadata
     ) {
-        $this->attributeRepository = $attributeRepository;
+        //$this->attributeRepository = $attributeRepository;
         $this->productMetadata = $productMetadata;
     }
 

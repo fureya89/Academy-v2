@@ -12,5 +12,11 @@
              dependsOnModule="Academy_SmsSubscription"
              action="subscription/manage/index"
              resource="Academy_SmsSubscription::index"/>
+        <add id="Academy_SmsSubscription::subscription_manage_message"
+             title="Send subscription" translate="title" module="Academy_SmsSubscription"
+             parent="Academy_SmsSubscription::subscription_manage" sortOrder="20"
+             dependsOnModule="Academy_SmsSubscription"
+             action="subscription/manage/message"
+             resource="Academy_SmsSubscription::message"/>
     </menu>
 </config>
